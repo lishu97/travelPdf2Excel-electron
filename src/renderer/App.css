@@ -4,17 +4,52 @@
  */
 body {
   position: relative;
-  color: white;
   height: 100vh;
-  background: linear-gradient(
-    200.96deg,
-    #fedc2a -29.09%,
-    #dd5789 51.77%,
-    #7a2c9e 129.35%
-  );
-  font-family: sans-serif;
   overflow-y: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.form {
+  width: 300px;
+}
+.formItem {
+  margin-bottom: 20px;
+}
+.formItem .label {
+  margin-bottom: 10px;
+}
+.formItem .content {
+  width: 300px;
+}
+.formItem .content input{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ant-upload-list .ant-upload-span {
+  display: flex;
+  align-items: center;
+  width: calc(100% + 24px);
+}
+.ant-upload-list {
+  width: 300px;
+}
+.ant-upload-list-item .ant-upload-list-item-info {
+  padding: 0;
+}
+.ant-upload-list .ant-upload-list-item-name {
+  max-width: calc(100% - 14px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.ant-upload-list .ant-upload-list-item:hover .ant-upload-list-item-info {
+  background: none !important;
+}
+
+.operation {
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
 }

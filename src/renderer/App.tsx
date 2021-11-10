@@ -6,6 +6,9 @@ import { UploadOutlined } from '@ant-design/icons';
 // import classnames from 'classNames'
 import './App.css';
 import 'antd/lib/message/style/index.css';
+import 'antd/lib/upload/style/index.css';
+import 'antd/lib/input/style/index.css';
+import 'antd/lib/button/style/index.css';
 
 const Hello = () => {
   const [id, setId] = useState('');
@@ -78,14 +81,29 @@ const Hello = () => {
               onChange={onChange}
               accept=".pdf"
             >
-              <Button icon={<UploadOutlined />}>Upload</Button>
+              <Button size="small" icon={<UploadOutlined />}>
+                Upload
+              </Button>
             </Upload>
           </div>
         </div>
       </div>
-      <Button size="small" onClick={() => console.log(fileList)}>
-        开始导出
-      </Button>
+      <div className="operation">
+        <Button
+          size="large"
+          type="primary"
+          onClick={() => console.log(fileList)}
+        >
+          导出
+        </Button>
+        <Button
+          size="large"
+          type="default"
+          onClick={() => console.log(fileList)}
+        >
+          重置
+        </Button>
+      </div>
     </div>
   );
 };

@@ -11,8 +11,13 @@ body {
   align-items: center;
 }
 
+.appContainer {
+  width: calc(100vw - 200px);
+  min-width: 200px;
+  max-width: 500px;
+}
 .form {
-  width: 300px;
+  width: 100%;
 }
 .formItem {
   margin-bottom: 20px;
@@ -21,7 +26,7 @@ body {
   margin-bottom: 10px;
 }
 .formItem .content {
-  width: 300px;
+  width: 100%;
 }
 .formItem .content input{
   width: 100%;
@@ -31,25 +36,29 @@ body {
 .ant-upload-list .ant-upload-span {
   display: flex;
   align-items: center;
-  width: calc(100% + 24px);
+  width: calc(100% + 24px + 10px);
 }
 .ant-upload-list {
-  width: 300px;
+  width: 100%;
 }
 .ant-upload-list-item .ant-upload-list-item-info {
   padding: 0;
 }
 .ant-upload-list .ant-upload-list-item-name {
   max-width: calc(100% - 14px);
+  padding-right: 0 !important;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+.ant-upload-list-item-card-actions {
+  margin-left: 10px;
 }
 .ant-upload-list .ant-upload-list-item:hover .ant-upload-list-item-info {
   background: none !important;
 }
 
 .operation {
-  width: 300px;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }

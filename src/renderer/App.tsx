@@ -17,14 +17,28 @@ const Hello = () => {
 
   const onChange = useCallback(
     ({ file }) => {
-      if (
-        !fileList.find(
-          (item) => item.originFileObj?.path === file.originFileObj.path
-        )
-      ) {
-        setFileList((preFileList) => [...preFileList, file]);
-      } else {
-        message.warning(`"${file.originFileObj.name}" 已在选择列表中`);
+      switch (file.status) {
+        case 'uploading':
+          if (
+            !fileList.find(
+              (item) => item.originFileObj?.path === file.originFileObj.path
+            )
+          ) {
+            setFileList((preFileList) => [...preFileList, file]);
+          } else {
+            message.warning(`"${file.originFileObj.name}" 已在选择列表中`);
+          }
+          break;
+        case 'removed':
+          setFileList((preFileList) =>
+            preFileList.filter(
+              (item) => item.originFileObj?.path !== file.originFileObj.path
+            )
+          );
+          break;
+        default:
+          console.warn('不是新增、也不是删除操作', file);
+          break;
       }
     },
     [fileList]
@@ -49,7 +63,7 @@ const Hello = () => {
   );
   // TODO: taiwan css
   return (
-    <div>
+    <div className="appContainer">
       <div className="form">
         <div className="formItem">
           <div className="label">工号：</div>
@@ -92,14 +106,18 @@ const Hello = () => {
         <Button
           size="large"
           type="primary"
-          onClick={() => console.log(fileList)}
+          onClick={() => console.log(fileList, id, name)}
         >
           导出
         </Button>
         <Button
           size="large"
           type="default"
-          onClick={() => console.log(fileList)}
+          onClick={() => {
+            setId('');
+            setName('');
+            setFileList([]);
+          }}
         >
           重置
         </Button>

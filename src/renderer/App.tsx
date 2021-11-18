@@ -1,8 +1,9 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
 import { Upload, Button, message, Input } from 'antd';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { UploadOutlined } from '@ant-design/icons';
+import { getBase64 } from './utils';
 // import classnames from 'classNames'
 import './App.css';
 import 'antd/lib/message/style/index.css';
@@ -10,10 +11,23 @@ import 'antd/lib/upload/style/index.css';
 import 'antd/lib/input/style/index.css';
 import 'antd/lib/button/style/index.css';
 
-const Hello = () => {
+declare global {
+  interface Window {
+    electron?: any;
+  }
+}
+
+const Translator = () => {
   const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [fileList, setFileList] = useState<Array<UploadFile>>([]);
+
+  useEffect(() => {
+    window.electron.ipcRenderer.on('ipc-example', (a:any) => {
+      console.log(a);
+      // 关闭loading，提示成功
+    });
+  }, [])
 
   const onChange = useCallback(
     ({ file }) => {
@@ -37,6 +51,7 @@ const Hello = () => {
           );
           break;
         default:
+          // eslint-disable-next-line no-console
           console.warn('不是新增、也不是删除操作', file);
           break;
       }
@@ -61,7 +76,22 @@ const Hello = () => {
     },
     [fileList]
   );
-  // TODO: taiwan css
+
+  const onExport = useCallback(() => {
+    // TODO: 采集导出路径
+    Promise.all(
+      fileList.map((file) => {
+        return getBase64(file.originFileObj!);
+      })
+    ).then((filesBase64) => {
+      window.electron.ipcRenderer.myPing({
+        id,
+        name,
+        fileList: filesBase64,
+      });
+    });
+  }, [id, name, fileList]);
+
   return (
     <div className="appContainer">
       <div className="form">
@@ -103,11 +133,7 @@ const Hello = () => {
         </div>
       </div>
       <div className="operation">
-        <Button
-          size="large"
-          type="primary"
-          onClick={() => console.log(fileList, id, name)}
-        >
+        <Button size="large" type="primary" onClick={onExport}>
           导出
         </Button>
         <Button
@@ -130,7 +156,7 @@ export default function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" component={Hello} />
+        <Route path="/" component={Translator} />
       </Switch>
     </Router>
   );

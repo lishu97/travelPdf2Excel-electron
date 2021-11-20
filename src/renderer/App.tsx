@@ -23,11 +23,11 @@ const Translator = () => {
   const [fileList, setFileList] = useState<Array<UploadFile>>([]);
 
   useEffect(() => {
-    window.electron.ipcRenderer.on('ipc-example', (a:any) => {
+    window.electron.ipcRenderer.on('ipc-example', (a: any) => {
       console.log(a);
       // 关闭loading，提示成功
     });
-  }, [])
+  }, []);
 
   const onChange = useCallback(
     ({ file }) => {
@@ -93,31 +93,39 @@ const Translator = () => {
   }, [id, name, fileList]);
 
   return (
-    <div className="appContainer">
-      <div className="form">
-        <div className="formItem">
-          <div className="label">工号：</div>
-          <div className="content">
+    <div
+      style={{
+        width: 'calc(100vw - 200px)',
+        minWidth: '200px',
+        maxWidth: '500px',
+      }}
+    >
+      <div className="w-full">
+        <div className="mb-4">
+          <div className="mb-2">工号：</div>
+          <div className="w-full">
             <Input
               value={id}
               onChange={(e) => setId(e.target.value)}
+              className="w-full box-border"
               placeholder="请输入工号"
             />
           </div>
         </div>
-        <div className="formItem">
-          <div className="label">姓名：</div>
-          <div className="content">
+        <div className="mb-4">
+          <div className="mb-2">姓名：</div>
+          <div className="w-full">
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}
+              className="w-full box-border"
               placeholder="请输入姓名"
             />
           </div>
         </div>
-        <div className="formItem">
-          <div className="label">文件：</div>
-          <div className="content">
+        <div className="mb-4">
+          <div className="mb-2">文件：</div>
+          <div className="w-full">
             <Upload
               multiple
               fileList={fileList}
@@ -132,7 +140,7 @@ const Translator = () => {
           </div>
         </div>
       </div>
-      <div className="operation">
+      <div className="flex justify-around">
         <Button size="large" type="primary" onClick={onExport}>
           导出
         </Button>

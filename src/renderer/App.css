@@ -1,10 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/*
- * @NOTE: Prepend a `~` to css file paths that are in your node_modules
- *        See https://github.com/webpack-contrib/sass-loader#imports
- */
+
+:root {
+  font-size: 20px;
+}
+
 body {
   position: relative;
   height: 100vh;
@@ -12,34 +13,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-/*
-.appContainer {
-  width: calc(100vw - 200px);
-  min-width: 200px;
-  max-width: 500px;
-}
-.form {
-  width: 100%;
-}
-.formItem {
-  margin-bottom: 20px;
-}
-.formItem .label {
-  margin-bottom: 10px;
-}
-.formItem .content {
-  width: 100%;
-}
-.formItem .content input{
-  width: 100%;
-  box-sizing: border-box;
+  font-size: 16px;
 }
 
+.ant-upload .ant-btn {
+  display: flex;
+  align-items: center;
+}
 .ant-upload-list .ant-upload-span {
   display: flex;
   align-items: center;
-  width: calc(100% + 24px + 10px);
+  width: 100%;
 }
 .ant-upload-list {
   width: 100%;
@@ -47,21 +31,21 @@ body {
 .ant-upload-list-item .ant-upload-list-item-info {
   padding: 0;
 }
+.ant-upload-list .ant-upload-text-icon {
+  align-items: center;
+  display: flex;
+}
 .ant-upload-list .ant-upload-list-item-name {
-  max-width: calc(100% - 14px);
+  max-width: calc(100% - 14px - 32px);
+  flex: 0 0 auto !important;
+  width: auto !important;
   padding-right: 0 !important;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.ant-upload-list-item-card-actions {
-  margin-left: 10px;
+.ant-upload-list .ant-upload-list-item-card-actions {
+  margin-left: 8px;
 }
 .ant-upload-list .ant-upload-list-item:hover .ant-upload-list-item-info {
   background: none !important;
 }
-
-.operation {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-} */

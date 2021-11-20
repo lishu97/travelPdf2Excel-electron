@@ -201,7 +201,7 @@ export default class MenuBuilder {
             label: '&关于',
             accelerator: 'Ctrl+I',
             click() {
-              shell.openExternal('https://electronjs.org');
+              shell.openExternal('https://github.com/lishu97/travelPdf2Excel-electron');
             },
           },
           {

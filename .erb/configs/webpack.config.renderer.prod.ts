@@ -61,13 +61,13 @@ export default merge(baseConfig, {
               importLoaders: 1,
             },
           },
-          'sass-loader',
+          'postcss-loader',
         ],
         include: /\.module\.s?(c|a)ss$/,
       },
       {
         test: /\.s?(a|c)ss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
         exclude: /\.module\.s?(c|a)ss$/,
       },
       // WOFF Font

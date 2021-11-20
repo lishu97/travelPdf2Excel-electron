@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 /*
  * @NOTE: Prepend a `~` to css file paths that are in your node_modules
  *        See https://github.com/webpack-contrib/sass-loader#imports
@@ -10,7 +13,7 @@ body {
   justify-content: center;
   align-items: center;
 }
-
+/*
 .appContainer {
   width: calc(100vw - 200px);
   min-width: 200px;
@@ -61,4 +64,4 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-around;
-}
+} */

@@ -15,6 +15,7 @@ import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
+import controller from './controller';
 import { resolveHtmlPath } from './util';
 
 export default class AppUpdater {
@@ -27,20 +28,7 @@ export default class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-ipcMain.on('ipc-example', async (event, arg: unknown) => {
-  console.log('nodejs收到:', arg);
-  event.reply('ipc-example', 'ok');
-});
-
-ipcMain.on('ipc', async (event, arg: unknown) => {
-  console.log('nodejs收到:', arg);
-  const dir = dialog.showOpenDialog(mainWindow!, {
-      properties: ['openDirectory']
-  });
-  dir.then(dif => {
-    event.reply('ipc-example', dif);
-  })
-});
+controller({ mainWindow });
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');

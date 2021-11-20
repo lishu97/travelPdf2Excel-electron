@@ -25,7 +25,7 @@ const Translator = () => {
   const [fileList, setFileList] = useState<Array<UploadFile>>([]);
 
   useEffect(() => {
-    window.electron.ipcRenderer.on('ipc-example', (a: any) => {
+    window.electron.ipcRenderer.on('ipc', (a: any) => {
       console.log(a);
       // 关闭loading，提示成功
     });
@@ -86,10 +86,13 @@ const Translator = () => {
         return getBase64(file.originFileObj!);
       })
     ).then((filesBase64) => {
-      window.electron.ipcRenderer.myPing({
-        id,
-        name,
-        fileList: filesBase64,
+      window.electron.ipcRenderer.send({
+        name: 'exportExcel',
+        payload: {
+          id,
+          name,
+          fileList: filesBase64,
+        },
       });
     });
   }, [id, name, fileList]);

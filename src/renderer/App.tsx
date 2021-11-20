@@ -3,6 +3,7 @@ import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
 import { Upload, Button, message, Input } from 'antd';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { UploadOutlined } from '@ant-design/icons';
+import DirInput from './DirInput';
 import { getBase64 } from './utils';
 // import classnames from 'classNames'
 import './App.css';
@@ -18,6 +19,7 @@ declare global {
 }
 
 const Translator = () => {
+  const [dir, setDir] = useState('');
   const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [fileList, setFileList] = useState<Array<UploadFile>>([]);
@@ -101,6 +103,12 @@ const Translator = () => {
       }}
     >
       <div className="w-full">
+        <div className="mb-4">
+          <div className="mb-2">导出目录：</div>
+          <div className="w-full">
+            <DirInput value={dir} onChange={(value: string) => setDir(value)} />
+          </div>
+        </div>
         <div className="mb-4">
           <div className="mb-2">工号：</div>
           <div className="w-full">

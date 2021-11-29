@@ -16,6 +16,7 @@ body {
   font-size: 16px;
 }
 
+/* 覆盖antd默认样式 */
 .ant-upload .ant-btn {
   display: flex;
   align-items: center;
@@ -48,4 +49,8 @@ body {
 }
 .ant-upload-list .ant-upload-list-item:hover .ant-upload-list-item-info {
   background: none !important;
+}
+.ant-message-custom-content {
+  display: flex;
+  align-items: center;
 }

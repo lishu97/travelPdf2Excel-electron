@@ -1,6 +1,6 @@
 import { BrowserWindow, ipcMain, dialog } from 'electron';
 
-import travelPdfToExcel from 'travel-pdf-to-excel';
+const travelPdfToExcel = require('travel-pdf-to-excel');
 
 export type action = {
   name: string;
@@ -13,6 +13,8 @@ type exportExcelPayload = {
   outputPath: string;
   filePaths: Array<string>;
 };
+
+type travelPdfToExcelRes = { status: string; message: unknown };
 
 export default function controller(mainWindow: BrowserWindow | null) {
   ipcMain.on('ipc', async (event, arg: action) => {
@@ -32,12 +34,14 @@ export default function controller(mainWindow: BrowserWindow | null) {
       case 'exportExcel':
         const { outputPath, id, name, filePaths } =
           arg.payload as exportExcelPayload;
-        travelPdfToExcel(id, name, filePaths, outputPath).then((res) => {
-          event.reply('ipc', {
-            name: 'exportEnd',
-            payload: res.status,
-          });
-        });
+        travelPdfToExcel(id, name, filePaths, outputPath).then(
+          (res: travelPdfToExcelRes) => {
+            event.reply('ipc', {
+              name: 'exportEnd',
+              payload: res.status,
+            });
+          }
+        );
         break;
       default:
         break;

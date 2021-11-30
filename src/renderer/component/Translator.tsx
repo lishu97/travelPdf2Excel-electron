@@ -14,7 +14,6 @@ const Translator = () => {
 
   useEffect(() => {
     window.electron.ipcRenderer.on('ipc', (arg: action) => {
-      console.log(arg);
       switch (arg.name) {
         case 'exportEnd': {
           message.destroy(loadingKeyRef.current);

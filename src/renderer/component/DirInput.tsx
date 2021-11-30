@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Input, Button, message } from 'antd';
-
+import { action } from '../../main/controller';
 interface DirInputProps {
   value: string;
   onChange: (value: string) => void;
@@ -8,8 +8,12 @@ interface DirInputProps {
 
 export default function DirInput(props: DirInputProps) {
   useEffect(() => {
-    window.electron.ipcRenderer.on('ipc', (dir: string | undefined) => {
-      typeof dir === 'string' && props.onChange(dir);
+    window.electron.ipcRenderer.on('ipc', (arg: action) => {
+      switch (arg.name) {
+        case 'changeDir': {
+          typeof arg.payload === 'string' && props.onChange(arg.payload);
+        }
+      }
     });
   }, []);
 

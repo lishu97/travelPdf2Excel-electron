@@ -1,20 +1,30 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { Upload, Button, message, Input } from 'antd';
 import { UploadFile } from 'antd/lib/upload/interface';
+import { action } from '../../main/controller';
 import { UploadOutlined } from '@ant-design/icons';
 import DirInput from './DirInput';
-import { getBase64 } from '../utils';
 
 const Translator = () => {
+  const loadingKeyRef = useRef('loading');
   const [dir, setDir] = useState('');
   const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [fileList, setFileList] = useState<Array<UploadFile>>([]);
 
   useEffect(() => {
-    window.electron.ipcRenderer.on('ipc', (a: Electron.IpcRenderer) => {
-      console.log(a);
-      // 关闭loading，提示成功
+    window.electron.ipcRenderer.on('ipc', (arg: action) => {
+      console.log(arg);
+      switch (arg.name) {
+        case 'exportEnd': {
+          message.destroy(loadingKeyRef.current);
+          if (arg.payload === 'success') {
+            message.success('导出完成！');
+          } else {
+            message.error('导出失败！');
+          }
+        }
+      }
     });
   }, []);
 
@@ -67,20 +77,33 @@ const Translator = () => {
   );
 
   const onExport = useCallback(() => {
-    // TODO: 采集导出路径
-    Promise.all(
-      fileList.map((file) => {
-        return getBase64(file.originFileObj!);
-      })
-    ).then((filesBase64) => {
-      window.electron.ipcRenderer.send({
-        name: 'exportExcel',
-        payload: {
-          id,
-          name,
-          fileList: filesBase64,
-        },
-      });
+    if (!dir) {
+      message.warning('请选择导出目录');
+      return;
+    }
+    if (!id) {
+      message.warning('工号不能为空');
+      return;
+    }
+    if (!name) {
+      message.warning('姓名不能为空');
+      return;
+    }
+    if (!fileList?.length) {
+      message.warning('请选择文件');
+      return;
+    }
+    message.loading({ content: '正在导出...', key: loadingKeyRef.current }, 0);
+    window.electron.ipcRenderer.send({
+      name: 'exportExcel',
+      payload: {
+        outputPath: dir,
+        id,
+        name,
+        filePaths: fileList
+          .map((file) => file?.originFileObj?.path)
+          .filter(Boolean),
+      },
     });
   }, [id, name, fileList]);
 
@@ -96,7 +119,7 @@ const Translator = () => {
         <div className="mb-4">
           <div className="mb-2">导出目录：</div>
           <div className="w-full">
-            <DirInput value={dir} onChange={(dir:string) => setDir(dir)} />
+            <DirInput value={dir} onChange={(dir: string) => setDir(dir)} />
           </div>
         </div>
         <div className="mb-4">

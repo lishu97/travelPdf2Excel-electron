@@ -12,18 +12,24 @@
 
 ## 二、使用步骤
 ### 1.下载附件，解压后执行“行程单pdf转excel.exe”文件
-<img src="./assets/readmeImg/目录.png">
+
+<img src="assets/readmeImg/目录.png">
 
 ### 2.录入导出目录，输入工号、姓名，选择行程单pdf
+
 <span style="color: orange;">注：暂未做文件校验，所以必须选择正确的pdf文件，否则无法获取到行程记录</span>
-<img src="./assets/readmeImg/界面.png">
+
+<img src="assets/readmeImg/界面.png">
 
 ### 3.点击 “导出” 按钮，待提示 “导出完成” 后，到导出目录可查看
-<img src="./assets/readmeImg/完成.png">
+
+<img src="assets/readmeImg/完成.png">
 
 ### 4.查看导出的Excel文件
+
 <span style="color: orange;">注：事由默认为 “加班至晚上10点后，无公交”，若需更改事由，可导出后自行调整内容</span>
-<img src="./assets/readmeImg/表格.png">
+
+<img src="assets/readmeImg/表格.png">
 
 ## 三、技术栈
 electron、typescript、nodejs、react hooks、antd、postcss | 原子化css | tailwindcss、eslint + prettier、发布npm包

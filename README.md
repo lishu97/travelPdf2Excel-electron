@@ -11,7 +11,7 @@
 - 初次投入使用，可能在特殊情况下会存在bug，欢迎反馈
 
 ## 二、使用步骤
-### 1.下载附件，解压后执行“行程单pdf转excel.exe”文件
+### 1.在releases栏下载win-unpacked.7z压缩包，用7z.zip工具解压后执行“行程单pdf转excel.exe”文件
 
 <img src="assets/readmeImg/目录.png">
 
